@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ODE Equation Identifier & Solver</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a class="corner-logo" href="#" aria-label="Capital University logo">
+                <img src="b8326c19-7fc6-4f31-bb18-9e32258df2f6.png" alt="Capital University logo">
+            </a>
+            <h1>ODE Equation Identifier & Solver</h1>
+            <p class="subtitle">Identify and solve ordinary differential equations</p>
+        </header>
+
+        <main>
+            <section class="input-section">
+                <div class="card">
+                    <h2>Enter Your Differential Equation</h2>
+                    <form id="equationForm">
+                        <div class="input-group">
+                            <label for="equation">Equation (use y' for dy/dx, y'' for d²y/dx²):</label>
+                            <input 
+                                type="text" 
+                                id="equation" 
+                                placeholder="e.g., y' + 2y = 0  or  y' = x/y  or  y' + xy = x"
+                                autocomplete="off"
+                            >
+                            <small>Examples: y' + g(x)y = h(x) | y' = f(x,y) | y'y + x = 0</small>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="dependentVar">Dependent variable (y):</label>
+                            <input 
+                                type="text" 
+                                id="dependentVar" 
+                                value="y"
+                                placeholder="Usually y"
+                            >
+                        </div>
+
+                        <div class="input-group">
+                            <label for="independentVar">Independent variable (x):</label>
+                            <input 
+                                type="text" 
+                                id="independentVar" 
+                                value="x"
+                                placeholder="Usually x"
+                            >
+                        </div>
+
+                        <button type="submit" class="btn-primary">Answer</button>
+                    </form>
+                </div>
+            </section>
+
+            <section id="resultsSection" class="results-section hidden">
+                <div class="card">
+                    <h2>Analysis Results</h2>
+                    
+                    <div class="result-item">
+                        <h3>Your Equation:</h3>
+                        <div id="displayEquation" class="equation-display"></div>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>Equation Type(s):</h3>
+                        <div id="equationType" class="type-badges"></div>
+                    </div>
+
+                    <div class="result-item">
+                        <h3>Solution Steps:</h3>
+                        <div id="solutionMethods" class="methods-list"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="examples-section">
+                <div class="card">
+                    <h2>Example Equations to Try</h2>
+                    <div class="examples-grid">
+                        <div class="example" data-equation="dy/dx - tan(x)y = sin(x)">
+                            <strong>Linear</strong>
+                            <code>dy/dx - tan(x)y = sin(x)</code>
+                        </div>
+                        <div class="example" data-equation="dy/dx - tan(x)y = sin(x)/y^2">
+                            <strong>Bernoulli</strong>
+                            <code>dy/dx - tan(x)y = sin(x)/y<sup>2</sup></code>
+                        </div>
+                        <div class="example" data-equation="dy/dx = (2xy+3y^2)/(x^2+2xy)">
+                            <strong>Homogeneous</strong>
+                            <code>dy/dx = (2xy+3y<sup>2</sup>)/(x<sup>2</sup>+2xy)</code>
+                        </div>
+                        <div class="example" data-equation="(tan(x)-sin(x)sin(y))dx+cos(x)cos(y)dy=0">
+                            <strong>Exact</strong>
+                            <code>(tan(x)-sin(x)sin(y))dx+cos(x)cos(y)dy=0</code>
+                        </div>
+                        <div class="example" data-equation="(3xy + y^2)dx + (x^2 + xy)dy = 0">
+                            <strong>Non-Exact</strong>
+                            <code>(3xy + y<sup>2</sup>)dx + (x<sup>2</sup> + xy)dy = 0</code>
+                        </div>
+                        <div class="example" data-equation="dy/dx = (x cos^2(y))/sin(x)">
+                            <strong>Separable</strong>
+                            <code>dy/dx = (x cos<sup>2</sup>(y))/sin(x)</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="reference-section">
+                <div class="card">
+                    <h2>ODE Types Reference</h2>
+                    <div class="reference-grid">
+                        <div class="reference-item">
+                            <h4>Linear First Order</h4>
+                            <p>Form: <code>y' + P(x)y = Q(x)</code></p>
+                            <p>Method: Integrating Factor</p>
+                        </div>
+                        <div class="reference-item">
+                            <h4>Separable</h4>
+                            <p>Form: <code>dy/dx = f(x)g(y)</code></p>
+                            <p>Method: Separation of Variables</p>
+                        </div>
+                        <div class="reference-item">
+                            <h4>Bernoulli</h4>
+                            <p>Form: <code>y' + P(x)y = Q(x)y^n</code></p>
+                            <p>Method: Substitution to Linear</p>
+                        </div>
+                        <div class="reference-item">
+                            <h4>Homogeneous</h4>
+                            <p>Form: <code>M(x,y)dx + N(x,y)dy = 0</code></p>
+                            <p>Method: Substitution v = y/x</p>
+                        </div>
+                        <div class="reference-item">
+                            <h4>Exact</h4>
+                            <p>Form: <code>M(x,y)dx + N(x,y)dy = 0</code></p>
+                            <p>Where: <code>∂M/∂y = ∂N/∂x</code></p>
+                        </div>
+                        <div class="reference-item">
+                            <h4>2nd Order Linear</h4>
+                            <p>Form: <code>a(x)y'' + b(x)y' + c(x)y = f(x)</code></p>
+                            <p>Methods: Characteristic equation, Variation of Parameters</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 ODE Equation Identifier & Solver | Educational Tool</p>
+        </footer>
+    </div>
+
+    <script src="ode-identifier.js?v=20260403-8"></script>
+    <script src="solver.js?v=20260403-8"></script>
+    <script src="app.js?v=20260403-8"></script>
+</body>
+</html>
